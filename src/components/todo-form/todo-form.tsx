@@ -1,7 +1,11 @@
 import React, {useRef} from 'react';
 import './todo-form.css';
 
-const ToDoForm: React.FC = () => {
+interface ToDoFormProps {
+    onAdd(title: string): void
+}
+
+const ToDoForm: React.FC<ToDoFormProps> = (props) => {
     // const [title, setTitle] = useState<string>('');
     //
     // const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +17,7 @@ const ToDoForm: React.FC = () => {
         if (event.key === 'Enter') {
             // console.log(title);
             // setTitle('');
+            props.onAdd(ref.current!.value);
             ref.current!.value = '';
         }
     };
