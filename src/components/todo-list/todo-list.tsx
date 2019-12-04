@@ -3,10 +3,22 @@ import './todo-list.css';
 import {IToDo} from "../interfaces";
 
 type TodoListProps = {
-    todos: IToDo[]
+    todos: IToDo[],
+    onToggle(id: number): void,  // специально показано два способа задания функций в компонент
+    onRemove: (id: number) => void
 }
 
-const ToDoList: React.FC<TodoListProps> = ({todos}) => {
+const ToDoList: React.FC<TodoListProps> = ({todos, onRemove, onToggle}) => {
+    if (todos.length === 0) {
+        return <p className="center">Пока дел нет</p>
+    }
+
+    const removeHandler = (event: React.MouseEvent, id: number) => {
+        event.preventDefault();
+
+        onRemove(id);
+    };
+
     return (
         <ul>
             {todos.map(todo => {
@@ -19,9 +31,12 @@ const ToDoList: React.FC<TodoListProps> = ({todos}) => {
                 return (
                     <li className={classes.join(' ')} key={todo.id}>
                         <label>
-                            <input type="checkbox" checked={todo.completed}/>
+                            <input type="checkbox" checked={todo.completed} onChange={onToggle.bind(null, todo.id)}/>
                             <span>{todo.title}</span>
-                            <i className="material-icons red-text">delete</i>
+                            <i
+                                className="material-icons red-text"
+                                onClick={(event) => removeHandler(event, todo.id)}
+                            >delete</i>
                         </label>
                     </li>
                 )
