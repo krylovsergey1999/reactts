@@ -1,13 +1,14 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 const Navbar: React.FC = () => {
     return (
         <nav>
             <div className="nav-wrapper indigo px1">
-                <a href="/" className="brand-logo">React + Typescript</a>
+                <NavLink to="/" className="brand-logo">React + Typescript</NavLink>
                 <ul className="right hide-on-med-and-down">
-                    <li><a href="/">Список дел</a></li>
-                    <li><a href="/">О нас</a></li>
+                    <li><NavLink to="/">Список дел</NavLink></li>
+                    <li><NavLink to="/about">О нас</NavLink></li>
                 </ul>
             </div>
         </nav>
