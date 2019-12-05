@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Navbar from './components/navbar';
 import ToDoForm from "./components/todo-form/todo-form";
 import ToDoList from "./components/todo-list/todo-list";
@@ -6,6 +6,15 @@ import {IToDo} from "./components/interfaces";
 
 const App: React.FC = () => {
     const [todos, setTodos] = useState<IToDo[]>([]);
+
+    useEffect(() => {
+        const saved: IToDo[] = JSON.parse(localStorage.getItem('todos') || '[]') as IToDo[];
+        setTodos(saved);
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }, [todos]);
 
     const addHanler = (title: string) => {
         console.log('add new todo', title);
